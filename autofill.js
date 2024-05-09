@@ -1,5 +1,5 @@
-// Listen for a message from the popup
 console.log('autofill.js loaded');
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'autofill' && message.data) {
     console.log('calling autofill');
@@ -18,39 +18,25 @@ function setInputValues(storedInputs) {
   const inputsElements = getInputElements();
   for (const inputElement of inputsElements) {
     const { name } = inputElement;
-    let foundValue= storedInputs[0][`${name}`]
-      if (foundValue !== null) {
-        setValue(inputElement, foundValue);
-      }
+    let foundValue = storedInputs[0][`${name}`]
+    if (foundValue !== null) {
+      setValue(inputElement, foundValue);
+    }
   }
 }
-function getFoundValue(input, inputElement) {
-  const { value: defaultValue, values: valuesByRules } = input;
-  let finalValue = defaultValue;
-  valuesByRules?.forEach(rule => {
-    const { value, isRuleMatched } = checkIsRuleMatched(rule, inputElement);
-    if (isRuleMatched) {
-      finalValue = value;
-    }
-  });
 
-  return finalValue;
+function triggerEvent(element, eventName) {
+  if ('createEvent' in document) {
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent(eventName, false, true);
+    element.dispatchEvent(event);
+  } else {
+    element.fireEvent('on' + eventName);
+  }
 }
 
-function checkIsRuleMatched(rule, inputElement) {
-  const { value, url, className, id } = rule;
-  const { location } = window;
-
-  const currentPageURL = location.hostname + location.pathname;
-  let isRuleMatched = false;
-  if (url === currentPageURL) {
-    isRuleMatched = true;
-  } // Additional checks for className and id can be implemented here
-
-  return {
-    isRuleMatched,
-    value,
-  };
+function waitForAsyncOperations(callback) {
+  setTimeout(callback, 1000); // Wait for 1 second before proceeding
 }
 
 function setValue(inputElement, value) {
@@ -58,20 +44,29 @@ function setValue(inputElement, value) {
   switch (type) {
     case INPUT_TYPES.radio:
       setRadioInputValue(inputElement, value);
+      triggerEvent(inputElement, 'change');
       break;
     case INPUT_TYPES.textarea:
       setTextareaValue(inputElement, value);
+      triggerEvent(inputElement, 'input');
       break;
     case INPUT_TYPES.checkbox:
       setCheckboxValue(inputElement, value);
+      triggerEvent(inputElement, 'change');
       break;
     default:
       inputElement.value = value;
+      triggerEvent(inputElement, 'input');
   }
 }
 
 function setRadioInputValue(inputElement, value) {
-  inputElement.checked = inputElement.value === value;
+  const radioButtons = document.getElementsByName(inputElement.name);
+  if (value) {
+    radioButtons[0].checked = true;
+  } else {
+    radioButtons[1].checked = true;
+  }
 }
 
 function setTextareaValue(inputElement, value) {
@@ -84,4 +79,14 @@ function setCheckboxValue(inputElement, value) {
 
 function getInputElements() {
   return [...document.querySelectorAll('input, select, textarea')];
+}
+
+// Example form submission function
+function submitForm() {
+  // Your form submission logic here
+  
+  // Example: submit the form after waiting for async operations
+  waitForAsyncOperations(() => {
+    document.getElementById('your-form-id').submit();
+  });
 }
