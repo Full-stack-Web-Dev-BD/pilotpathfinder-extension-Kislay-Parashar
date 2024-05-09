@@ -4,15 +4,25 @@
     <title>Login to Autofill</title>
     <link rel="stylesheet" href="popup.css">
     <script type="module" src="popup.js"></script>
+    <style>
+        .flex_2s{
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+        }
+    </style>
 </head>
-<body>
+<body >
     <div id="login-form">
         <input type="email" id="email" placeholder="Enter Email">
         <input type="password" id="password" placeholder="Enter Password">
         <button id="login">Sign In</button>
         <div id="error-message"></div>
     </div>
-    <button id="autofill" style="display:none;">Autofill</button>
-    <div id="sign-out" style="display:none;">Sign Out</div>
+    <div class="flex_2s">
+        <button id="autofill" style="display:none;">Autofill</button>
+        <button id="createDatabase" style="display:none;">Create AutoFill</button>
+    </div>
+    <div id="sign-out "  style="display:none; margin-top: 30px;">Sign Out</div>
 </body>
 </html>

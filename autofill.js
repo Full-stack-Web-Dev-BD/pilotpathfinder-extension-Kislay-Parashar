@@ -16,17 +16,17 @@ const INPUT_TYPES = Object.freeze({
 
 function setInputValues(storedInputs) {
   const inputsElements = getInputElements();
-  var tr = 0;
+  var  fillingEndAt = 0;
   for (const inputElement of inputsElements) {
-    if (tr < 17) {
-      console.log(tr);
+    if ( fillingEndAt < 17) {
+      console.log( fillingEndAt);
       const { name } = inputElement;
       let foundValue = storedInputs[0][`${name}`];
       if (foundValue !== null) {
         setValue(inputElement, foundValue);
       }
     }
-    tr += 1;
+     fillingEndAt += 1;
   }
 }
 
