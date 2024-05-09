@@ -16,12 +16,17 @@ const INPUT_TYPES = Object.freeze({
 
 function setInputValues(storedInputs) {
   const inputsElements = getInputElements();
+  var tr = 0;
   for (const inputElement of inputsElements) {
-    const { name } = inputElement;
-    let foundValue = storedInputs[0][`${name}`]
-    if (foundValue !== null) {
-      setValue(inputElement, foundValue);
+    if (tr < 17) {
+      console.log(tr);
+      const { name } = inputElement;
+      let foundValue = storedInputs[0][`${name}`];
+      if (foundValue !== null) {
+        setValue(inputElement, foundValue);
+      }
     }
+    tr += 1;
   }
 }
 
@@ -84,7 +89,7 @@ function getInputElements() {
 // Example form submission function
 function submitForm() {
   // Your form submission logic here
-  
+
   // Example: submit the form after waiting for async operations
   waitForAsyncOperations(() => {
     document.getElementById('your-form-id').submit();
