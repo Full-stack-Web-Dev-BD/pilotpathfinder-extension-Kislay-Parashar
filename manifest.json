@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Form Autofill and Learn",
+  "version": "1.0",
+  "description": "Fills forms with data from Firebase",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "scripting",
+    "identity"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "./images/logo.png",
+      "48": "./images/logo.png",
+      "128": "./images/logo.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "./images/logo.png",
+    "48": "./images/logo.png",
+    "128": "./images/logo.png"
+  }
+}

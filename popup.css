@@ -1,0 +1,56 @@
+body {
+    width: 300px;
+    margin: 10px;
+    font-family: Arial, sans-serif;
+    position: relative; /* Needed to position the sign-out link absolutely */
+}
+
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #179d10;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login {
+    width: 100%; /* Full width for the login button */
+}
+
+#autofill {
+    display: none; /* Keep it hidden initially */
+    width: calc(70% - 20px); /* Width adjusted to allow room for the sign out link */
+    display: inline-block; /* Allows button to sit inline with the sign-out link */
+}
+
+#sign-out {
+    display: none; /* Keep it hidden initially */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #179d10; /* Use the theme color for consistency */
+    font-weight: bold; /* Make it stand out as a clickable action */
+    text-decoration: underline; /* Suggest that it is a link */
+}
+
+#error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
+/* Additional styling to make buttons and sign-out link inline */
+button, #sign-out {
+    vertical-align: top; /* Align the tops of inline elements */
+}
